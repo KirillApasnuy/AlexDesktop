@@ -16,6 +16,6 @@ class Validator():
         pattern = r'^[а-яА-Я]+$'
         return re.match(pattern, name) is not None
     def isValidPassword(self, password):
-        if len(password) < 8:
+        if len(password) < 4:
             return False
         return True

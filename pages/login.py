@@ -1,13 +1,18 @@
 from flet import *
 from utils.color import *
-# import flet as ft
+from dbmethod.postLoginSchoolboy import *
+from utils.validation import Validator
+from servic.auth import *
 class Login(Container):
     def __init__(self, page:Page):
         super().__init__()
+
         self.padding = 0
         self.alignment = alignment.center
         self.expand = True
+        self.validator = Validator()
         self.bgcolor ='#3d3d3d'
+        self.error_border = border.all(width=1, color='red',)
         self.name_box = Container(
 
             content=TextField(
@@ -112,4 +117,35 @@ class Login(Container):
         )
 
     def login(self, e):
-        pass
+        name = self.name_box.content.value
+        password = self.password_box.content.value
+
+        if not self.validator.isValidImgface(name):
+            self.name_box.border = self.error_border
+            self.name_box.update()
+
+        if not self.validator.isValidPassword(password):
+            self.password_box.border = self.error_border
+            self.password_box.update()
+
+        else:
+            self.page.splash = ProgressBar()
+            self.page.update()
+
+            print('начало метода post(log)')
+            token = postLoginSchoolboy(name, password)
+
+            self.page.splash = None
+            self.page.update()
+
+            if token:
+                storeToken(token)
+                self.page.go('/me')
+            else:
+                self.page.snack_bar = SnackBar(
+                    Text(
+                        "Что-то не верно указанно"
+                    )
+                )
+                self.page.snack_bar.open = True
+                self.page.update()

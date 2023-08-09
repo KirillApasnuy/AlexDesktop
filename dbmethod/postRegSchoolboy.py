@@ -1,7 +1,7 @@
 import requests
 
 def postRegSchoolboy(imgFace, password, email):
-    print('начало post')
+    print('начало post(reg)')
     name = imgFace.split("_")
     first_name = name[0]
     last_name = name[1]
