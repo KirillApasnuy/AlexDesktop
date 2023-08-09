@@ -1,7 +1,7 @@
 import cv2
 import os
 
-def take_screenshot_from_cam():
+def take_screenshot_from_cam(imgFace):
     cap = cv2.VideoCapture(0)
     count = 0
 
@@ -21,7 +21,7 @@ def take_screenshot_from_cam():
             k = cv2.waitKey(20)
 
             if k == ord(" "):
-                cv2.imwrite(f"dataset_from_cam/{count}.jpg", frame)
+                cv2.imwrite(f"dataset_from_cam/{imgFace}.jpg", frame)
                 count += 1
 
             elif k == ord("q") or count == 5:

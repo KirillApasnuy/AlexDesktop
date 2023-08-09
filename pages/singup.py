@@ -1,6 +1,8 @@
 from flet import *
 from utils.color import *
 from takePhoto import take_screenshot_from_cam
+from utils.validation import Validator
+from dbmethod.postRegSchoolboy import postRegSchoolboy
 import cv2
 import os
 import time
@@ -11,7 +13,9 @@ class Singup(Container):
         self.padding = 0
         self.alignment = alignment.center
         self.expand = True
+        self.validator = Validator()
         self.bgcolor ='#3d3d3d'
+        self.error_border = border.all(width=1, color='red',)
         self.firstname_box = Container(
 
             content=TextField(
@@ -99,7 +103,7 @@ class Singup(Container):
                     size=14, color=input_col,
 
                 ),
-                hint_text='Введите свой пароль',
+                hint_text='Введите свой пароль, не менее 8 символов',
                 cursor_color='#c9c9c9',
                 text_style=TextStyle(
                     size=16,
@@ -159,7 +163,8 @@ class Singup(Container):
 
                                             bgcolor='#ff00a6',
                                             border_radius=15,
-                                            width=205,
+                                            # width=205,
+                                            width=370,
                                             height=40,
                                             content=Text(
                                                 value='Зарегистрироваться!',
@@ -168,20 +173,20 @@ class Singup(Container):
                                             ),
                                             on_click=self.singup,
                                         ),
-                                        Container(
-                                            alignment=alignment.center,
-
-                                            bgcolor='#ff00a6',
-                                            border_radius=15,
-                                            width=155,
-                                            height=40,
-                                            content=Text(
-                                                value='Сделать фото',
-                                                color='white',
-                                                size=18,
-                                            ),
-                                            on_click=self.photo,
-                                        ),
+                                        # Container(
+                                        #     alignment=alignment.center,
+                                        #
+                                        #     bgcolor='#ff00a6',
+                                        #     border_radius=15,
+                                        #     width=155,
+                                        #     height=40,
+                                        #     content=Text(
+                                        #         value='Сделать фото',
+                                        #         color='white',
+                                        #         size=18,
+                                        #     ),
+                                        #     on_click=self.photo,
+                                        # ),
                                     ]
                                 )
                             )
@@ -196,12 +201,33 @@ class Singup(Container):
         )
 
     def singup(self, e):
-        pass
+        first_name = self.firstname_box.content.value
+        last_name = self.lastname_box.content.value
+        email = self.email_box.content.value
+        imgFace = self.imgFace_box.content.value
+        password = self.password_box.content.value
+        if not self.validator.isValidImgface(imgFace):
+            self.imgFace_box.border = self.error_border
+            self.imgFace_box.update()
+        if not self.validator.isValidName(first_name and last_name):
+            self.firstname_box.border = self.error_border
+            self.firstname_box.update()
+            self.lastname_box.border = self.error_border
+            self.lastname_box.update()
+        if not self.validator.isValidPassword(password):
+            self.password_box.border = self.error_border
+            self.password_box.update()
 
-    def photo(self, e):
         self.event_handlers
+        print('перед запуском pRS')
+        postRegSchoolboy(imgFace, password, email)
+        print('после запуска pRS')
         print(e)
-        take_screenshot_from_cam()
+        print('перед запуском фотографа')
+        take_screenshot_from_cam(imgFace)
+        print('после запуска фотографа')
+    # def photo(self, e ):
+
         # cap = cv2.VideoCapture(0)
         # count = 0
         #

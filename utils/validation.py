@@ -9,14 +9,13 @@ class Validator():
         if len(name)< 2:
             return None
         return True
+    def isValidImgface(self, Imgface):
+        pattern = r'^[a-zA-Z_]+$'
+        return re.match(pattern, Imgface) is not None
     def isValidName(self, name):
         pattern = r'^[а-яА-Я]+$'
         return re.match(pattern, name) is not None
     def isValidPassword(self, password):
-        if not isinstance(password, str):
-            return False
         if len(password) < 8:
-            return False
-        if not any(c.isdigit() for c in password):
             return False
         return True
