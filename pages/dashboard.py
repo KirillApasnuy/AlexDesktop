@@ -1,8 +1,12 @@
+import os
+
 from flet import *
 from utils.color import *
+import pickle
 class DashBoard(Container):
     def __init__(self, page:Page):
         super().__init__()
+        page.padding = 0
         self.expand = True
         self.bgcolor = bgc,
 
@@ -33,12 +37,15 @@ class DashBoard(Container):
                             ),
                             Container(
                                 Text(
-                                    value='dashboard',
+                                    value='Задание недели',
                                     size=16,
                                     color='white',
-                                    font_family='RobotoSlab',
+                                    weight=FontWeight.W_300,
+                                    # font_family='RobotoSlab',
 
-                                )
+                                ),
+
+                                on_click=self.getIndividualTask
                             ),
                             Divider(
                                 color='white',
@@ -47,10 +54,80 @@ class DashBoard(Container):
                             ),
                             Container(
                                 Text(
-                                    value='utilitues',
+                                    value='Викторина',
                                     size=16,
                                     color='white',
-                                    font_family='RobotoSlab',
+                                    weight=FontWeight.W_300,
+                                ),
+                                on_click=self.user
+                            ),
+                            Divider(
+                                color='white',
+                                height=0.5,
+                                thickness=.5
+                            ),
+                            Container(
+                                Text(
+                                    value='Предметы',
+                                    size=16,
+                                    color='white',
+                                    weight=FontWeight.W_300,
+                                ),
+                                on_click=self.user
+                            ),
+                            Divider(
+                                color='white',
+                                height=0.5,
+                                thickness=.5
+                            ),
+                            Container(
+                                Text(
+                                    value='Учителя',
+                                    size=16,
+                                    color='white',
+                                    weight=FontWeight.W_300,
+                                ),
+                                on_click=self.user
+                            ),
+                            Divider(
+                                color='white',
+                                height=0.5,
+                                thickness=.5
+                            ),
+                            Container(
+                                Text(
+                                    value='Администрация',
+                                    size=16,
+                                    color='white',
+                                    weight=FontWeight.W_300,
+                                ),
+                                on_click=self.user
+                            ),
+                            Divider(
+                                color='white',
+                                height=0.5,
+                                thickness=.5
+                            ),
+                            Container(
+                                Text(
+                                    value='Магазин игр',
+                                    size=16,
+                                    color='white',
+                                    weight=FontWeight.W_300,
+                                ),
+                                on_click=self.user
+                            ),
+                            Divider(
+                                color='white',
+                                height=0.5,
+                                thickness=.5
+                            ),
+                            Container(
+                                Text(
+                                    value='Новости',
+                                    size=16,
+                                    color='white',
+                                    weight=FontWeight.W_300,
                                 )
                             ),
                             Divider(
@@ -77,6 +154,7 @@ class DashBoard(Container):
                             #     ]
                             # )
                             Container(
+                                margin=Margin(left=0,right=0,bottom=0,top=470),
                                 height=100,
                                 bgcolor='#f09',
                                 border_radius=5,
@@ -85,32 +163,26 @@ class DashBoard(Container):
                                     horizontal_alignment='center',
                                     alignment='center',
                                     controls=[
-                                        # Text(
-                                        #     value='Занимался дизайном: БК',
-                                        #     text_align='center',
-                                        #     color='white',
-                                        # ),
                                         Container(
-                                            on_click=lambda _: self.page.go('/login'),
+                                            on_click=lambda _: self.page.go('/login') & self.logout,
                                             alignment=alignment.center,
                                             height=35,
                                             width=110,
                                             border_radius=5,
                                             bgcolor='#ff1ca4',
                                             content=Text(
-                                                value='Log out',
+                                                value='Выйти',
                                                 color='white',
                                                 size=14,
+                                                weight=FontWeight.W_300,
                                                 font_family='RobotoSlab',
                                             )
                                         )
-
                                     ]
                                 )
                             )
                         ]
                     )
-
                 ),
                 Container(
                     expand=True,
@@ -120,17 +192,19 @@ class DashBoard(Container):
                         controls=[
 
                             Container(
+                                margin=Margin(left=5, top=5, bottom=0, right=5),
                                 height=70,
                                 shadow=BoxShadow(
                                     spread_radius=2,
                                     color=bgc
                                 ),
-                                padding=padding.only(top=10, bottom=10, right=10, left=32),
+                                padding=padding.only(top=10, bottom=10, right=10, left=30),
                                 bgcolor=bgc,
                                 content=Row(
-                                    alignment='spaceBetween',
+                                    # alignment='spaceBetween',
                                     controls=[
                                         Row(
+
                                             spacing=0,
                                             controls=[
                                                 Container(
@@ -143,11 +217,11 @@ class DashBoard(Container):
                                                         hint_style=TextStyle(
                                                             size=12
                                                         ),
-                                                        content_padding=padding.only(bottom=10, left=20),
+                                                        content_padding=padding.only(bottom=10, left=20, top=0,right=10),
                                                         text_style=TextStyle(
                                                             color='#ff14a1',
-                                                            size=17,
-                                                            weight=FontWeight.W_500
+                                                            size=16,
+                                                            weight=FontWeight.W_600
                                                         )
                                                     )
                                                 ),
@@ -161,13 +235,17 @@ class DashBoard(Container):
                                                     )
                                                 ),
                                                 Row(
+                                                    # alignment=alignment.top_right,
+
                                                     spacing=15,
                                                     controls=[
                                                         Container(
-                                                            alignment=alignment.center,
-                                                                content=Stack(
+                                                            margin=Margin(left=800, top=0,right=10,bottom=0),
+                                                            content=Stack(
                                                                     controls=[
+
                                                                         Container(
+
                                                                             content=Icon(
                                                                                 icons.NOTIFICATIONS,
                                                                                 size=28,
@@ -196,20 +274,102 @@ class DashBoard(Container):
                                                             width=1,
                                                             bgcolor='#C5007F',
                                                         ),
+                                                        Container(
+                                                            margin=12,
+                                                            height=40,
+                                                            content=Text(
+                                                                value=f'Баланс равен: 0',
+                                                                size=16,
+                                                                text_align='center',
+                                                            ),
+                                                        ),
+                                                        Container(
+                                                            height=40,
+                                                            width=1,
+                                                            bgcolor='#C5007F',
+                                                        ),
                                                         CircleAvatar(
                                                             foreground_image_url="",
                                                             radius=15,
                                                         )
                                                     ]
-                                                )
+                                                ),
 
                                             ]
                                         )
+
                                     ]
                                 )
+                            ),
+
+                            Column(
+                                expand=True,
+                                scroll='auto',
+                                controls=[
+                                    Container(
+                                      padding=20,
+                                      content=Row(
+                                          alignment='spaceBetween',
+                                          controls=[
+                                              Row(
+                                                  controls=[
+                                                      Text(
+                                                          value="Hello,",
+                                                          size=30,
+                                                          color='#5a5c69',
+                                                          weight=FontWeight.W_300
+
+                                                      ),
+                                                      Text(
+                                                          value='kir',
+                                                          size=30,
+                                                          color='#5a5c69',
+                                                          weight=FontWeight.W_700,
+
+                                                      )
+                                                  ]
+                                              ),
+                                          ]
+
+                                      )
+                                    ),
+                                ]
                             )
                         ]
                     )
                 )
             ]
         )
+    def logout(self,e):
+
+        os.remove('../token.pickle')
+
+
+    def user(self, e,):
+        print('токеннн')
+        with open('../token.pickle', 'rb') as file:
+            token = pickle.load(file)
+            print(token)
+
+        # with open('../token.pickle', 'rb') as file:
+        #     yield pickle.load(file)
+        #     print(file)
+    def getIndividualTask(self, e):
+        pass
+
+    def getQuiz(self, e):
+        pass
+
+    def subject(self, e):
+        pass
+
+    def getTeacher(self, e):
+        pass
+
+    def getAdmin(self, e):
+        pass
+
+    def gameShop(self, e):
+        pass
+
+

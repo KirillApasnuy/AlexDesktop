@@ -10,6 +10,8 @@ class Main(UserControl):
     def __init__(self, page: Page,):
         super().__init__()
         self.page = page
+        self.margin = 0
+        page.padding = 0
         page.fonts = {
             "RobotoSlab": "https://github.com/google/fonts/raw/main/apache/robotoslab/RobotoSlab%5Bwght%5D.ttf"
         }

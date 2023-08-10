@@ -1,6 +1,5 @@
 import requests
 import json
-token = None
 def postLoginSchoolboy(name, password):
 
     print('начало post(login)')
@@ -29,5 +28,3 @@ def postLoginSchoolboy(name, password):
         return token
     except:
         return None
-
-
