@@ -1,11 +1,9 @@
-import os.path
 import pickle
+import os
 from flet import *
 from utils.color import *
 from dbmethod.postLoginSchoolboy import *
 from utils.validation import Validator
-# from servic.generatePickleFile import *
-# from servic.auth import *
 class Login(Container):
     def __init__(self, page:Page):
         super().__init__()
@@ -131,23 +129,33 @@ class Login(Container):
             self.password_box.update()
 
         else:
-            self.page.splash = ProgressBar()
-            self.page.update()
+            # self.page.splash = ProgressBar()
+            # self.page.update()
 
             print('начало метода post(log)')
             token = postLoginSchoolboy(name, password)
 
 
-            self.page.splash = None
-            self.page.update()
+            # self.page.splash = None
+            # self.page.update()
+            print('asd')
             print(token)
             tokenJWT = token
-            with open('token.pickle', 'wb') as file:
-                pickle.dump(tokenJWT, file)
 
 
 
-            if token != postLoginSchoolboy(name, password):
+
+            if token != None:
+                print(777)
+                self.page.go('/me')
+                try:
+                    os.remove('../token.pickle')
+                    # print('удаленно успешно')
+                    with open('token.pickle', 'wb') as file:
+                        pickle.dump(tokenJWT, file)
+                except OSError:
+                    print('error for delete token.pickle')
+            else:
                 self.page.snack_bar = SnackBar(
                     Text(
                         "Что-то не верно указано или не указано вовсе"
@@ -155,8 +163,6 @@ class Login(Container):
                 )
                 self.page.snack_bar.open = True
                 self.page.update()
-            else:
-                self.page.go('/me')
 
                 # generatePickleFile(token)
 

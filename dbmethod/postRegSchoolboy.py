@@ -5,7 +5,7 @@ def postRegSchoolboy(imgFace, password, email):
     name = imgFace.split("_")
     first_name = name[0]
     last_name = name[1]
-    url = "http://localhost:5000/api/schoolboy/registration"
+    url = "http://localhost:5000/alex/schoolboy/registration"
     payload = {
     "first_name": first_name,
     "last_name": last_name,

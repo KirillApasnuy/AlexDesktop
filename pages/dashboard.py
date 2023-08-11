@@ -1,15 +1,17 @@
 import os
-
 from flet import *
 from utils.color import *
 import pickle
 class DashBoard(Container):
     def __init__(self, page:Page):
         super().__init__()
+        # print('токеннн')
+        # with open('../token.pickle', 'rb') as file:
+        #     token = pickle.load(file)
+        #     print(token)
         page.padding = 0
         self.expand = True
         self.bgcolor = bgc,
-
         self.content = Row(
             spacing=0,
             controls=[
@@ -25,10 +27,27 @@ class DashBoard(Container):
                                     Icon(
                                         icons.PERSON,
                                         size=50,
-                                        color='white'
-                                    )
+                                        color='white',
+                                    ),
 
                                 ]
+                            ),
+                            Divider(
+                                color='white',
+                                height=0.5,
+                                thickness=.5
+                            ),
+                            Container(
+                                Text(
+                                    value='Главная',
+                                    size=16,
+                                    color='white',
+                                    weight=FontWeight.W_300,
+                                    # font_family='RobotoSlab',
+
+                                ),
+
+                                on_click=lambda _: self.page.go('/me')
                             ),
                             Divider(
                                 color='white',
@@ -41,11 +60,10 @@ class DashBoard(Container):
                                     size=16,
                                     color='white',
                                     weight=FontWeight.W_300,
-                                    # font_family='RobotoSlab',
 
                                 ),
 
-                                on_click=self.getIndividualTask
+                                on_click=lambda _: self.page.go('/me/individualtask')
                             ),
                             Divider(
                                 color='white',
@@ -59,7 +77,7 @@ class DashBoard(Container):
                                     color='white',
                                     weight=FontWeight.W_300,
                                 ),
-                                on_click=self.user
+                                on_click=lambda _: self.page.go('/me/quiz')
                             ),
                             Divider(
                                 color='white',
@@ -73,7 +91,7 @@ class DashBoard(Container):
                                     color='white',
                                     weight=FontWeight.W_300,
                                 ),
-                                on_click=self.user
+                                on_click=lambda _: self.page.go('/me/subject')
                             ),
                             Divider(
                                 color='white',
@@ -87,7 +105,7 @@ class DashBoard(Container):
                                     color='white',
                                     weight=FontWeight.W_300,
                                 ),
-                                on_click=self.user
+                                on_click=lambda _: self.page.go('/me/teacher')
                             ),
                             Divider(
                                 color='white',
@@ -101,7 +119,7 @@ class DashBoard(Container):
                                     color='white',
                                     weight=FontWeight.W_300,
                                 ),
-                                on_click=self.user
+                                on_click=lambda _: self.page.go('/me/admin')
                             ),
                             Divider(
                                 color='white',
@@ -115,7 +133,7 @@ class DashBoard(Container):
                                     color='white',
                                     weight=FontWeight.W_300,
                                 ),
-                                on_click=self.user
+                                on_click=lambda _: self.page.go('/me/gameshop')
                             ),
                             Divider(
                                 color='white',
@@ -128,33 +146,16 @@ class DashBoard(Container):
                                     size=16,
                                     color='white',
                                     weight=FontWeight.W_300,
-                                )
+                                ),
+                                on_click=lambda _: self.page.go('/me/news')
                             ),
                             Divider(
                                 color='white',
                                 height=0.5,
                                 thickness=.5
                             ),
-                            # Row(
-                            #     alignment='center',
-                            #     controls=[
-                            #         Container(
-                            #             alignment=alignment.center,
-                            #             height=35,
-                            #             width=35,
-                            #             bgcolor='white',
-                            #             border_radius= 20,
-                            #             content=Icon(
-                            #                 icons.ARROW_BACK_IOS_SHARP,
-                            #                 color='black',
-                            #                 size=15,
-                            #             )
-                            #
-                            #         )
-                            #     ]
-                            # )
                             Container(
-                                margin=Margin(left=0,right=0,bottom=0,top=470),
+                                margin=Margin(left=0, right=0, bottom=0, top=470),
                                 height=100,
                                 bgcolor='#f09',
                                 border_radius=5,
@@ -201,7 +202,6 @@ class DashBoard(Container):
                                 padding=padding.only(top=10, bottom=10, right=10, left=30),
                                 bgcolor=bgc,
                                 content=Row(
-                                    # alignment='spaceBetween',
                                     controls=[
                                         Row(
 
@@ -235,8 +235,6 @@ class DashBoard(Container):
                                                     )
                                                 ),
                                                 Row(
-                                                    # alignment=alignment.top_right,
-
                                                     spacing=15,
                                                     controls=[
                                                         Container(
@@ -321,7 +319,7 @@ class DashBoard(Container):
 
                                                       ),
                                                       Text(
-                                                          value='kir',
+                                                          value='world',
                                                           size=30,
                                                           color='#5a5c69',
                                                           weight=FontWeight.W_700,
@@ -341,35 +339,10 @@ class DashBoard(Container):
             ]
         )
     def logout(self,e):
-
+        # self.page.go('/login')
         os.remove('../token.pickle')
 
 
-    def user(self, e,):
-        print('токеннн')
-        with open('../token.pickle', 'rb') as file:
-            token = pickle.load(file)
-            print(token)
 
-        # with open('../token.pickle', 'rb') as file:
-        #     yield pickle.load(file)
-        #     print(file)
-    def getIndividualTask(self, e):
-        pass
-
-    def getQuiz(self, e):
-        pass
-
-    def subject(self, e):
-        pass
-
-    def getTeacher(self, e):
-        pass
-
-    def getAdmin(self, e):
-        pass
-
-    def gameShop(self, e):
-        pass
 
 
