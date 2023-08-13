@@ -6,9 +6,9 @@ class Teacher(Container):
     def __init__(self, page:Page):
         super().__init__()
         print('токеннн')
-        with open('../token.pickle', 'rb') as file:
-            token = pickle.load(file)
-            print(token)
+        # with open('../../token.pickle', 'rb') as file:
+        #     token = pickle.load(file)
+        #     print(token)
         page.padding = 0
         self.expand = True
         self.bgcolor = bgc,

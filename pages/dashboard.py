@@ -189,116 +189,126 @@ class DashBoard(Container):
                     expand=True,
                     bgcolor=bgc,
                     content=Column(
-                        expand=True,
+                        # expand=True,
+
                         controls=[
-
-                            Container(
-                                margin=Margin(left=5, top=5, bottom=0, right=5),
-                                height=70,
-                                shadow=BoxShadow(
-                                    spread_radius=2,
-                                    color=bgc
-                                ),
-                                padding=padding.only(top=10, bottom=10, right=10, left=30),
-                                bgcolor=bgc,
-                                content=Row(
-                                    controls=[
-                                        Row(
-
-                                            spacing=0,
+                            Row(
+                                controls=[
+                                    Container(
+                                        margin=Margin(left=5, top=5, bottom=0, right=5),
+                                        height=70,
+                                        shadow=BoxShadow(
+                                            spread_radius=2,
+                                            color=bgc
+                                        ),
+                                        padding=padding.only(top=10, bottom=10, right=10, left=30),
+                                        bgcolor=bgc,
+                                        content=Row(
+                                            alignment='spaceBetween',
                                             controls=[
-                                                Container(
-                                                    width=350,
-                                                    height=40,
-                                                    border_radius=BorderRadius(top_right=0,top_left=5,bottom_left=5,bottom_right=0),
-                                                    content=TextField(
-                                                        border=InputBorder.NONE,
-                                                        hint_text='Хочу найти...',
-                                                        hint_style=TextStyle(
-                                                            size=12
-                                                        ),
-                                                        content_padding=padding.only(bottom=10, left=20, top=0,right=10),
-                                                        text_style=TextStyle(
-                                                            color='#ff14a1',
-                                                            size=16,
-                                                            weight=FontWeight.W_600
-                                                        )
-                                                    )
-                                                ),
-                                                Container(
-                                                    height=40,
-                                                    width=40,
-                                                    bgcolor='#C5007F',
-                                                    border_radius=BorderRadius(top_right=5,top_left=0,bottom_left=0,bottom_right=5),
-                                                    content=Icon(
-                                                        icons.SEARCH
-                                                    )
-                                                ),
                                                 Row(
-                                                    spacing=15,
+
+                                                    spacing=0,
                                                     controls=[
                                                         Container(
-                                                            margin=Margin(left=800, top=0,right=10,bottom=0),
-                                                            content=Stack(
-                                                                    controls=[
-
-                                                                        Container(
-
-                                                                            content=Icon(
-                                                                                icons.NOTIFICATIONS,
-                                                                                size=28,
-                                                                                color='#c70077',
-                                                                            ),
-                                                                            margin=10,
-                                                                        ),
-                                                                        Container(
-                                                                            height=15,
-                                                                            width=18,
-                                                                            bgcolor=None,
-                                                                            right=3,
-                                                                            top=11,
-                                                                            alignment=alignment.center,
-                                                                            content=Text(
-                                                                                value='1',
-                                                                                size=12,
-                                                                            )
-                                                                        )
-                                                                    ]
+                                                            width=350,
+                                                            height=40,
+                                                            border_radius=BorderRadius(top_right=0, top_left=5,
+                                                                                       bottom_left=5, bottom_right=0),
+                                                            content=TextField(
+                                                                border=InputBorder.NONE,
+                                                                hint_text='Хочу найти...',
+                                                                hint_style=TextStyle(
+                                                                    size=12
                                                                 ),
+                                                                content_padding=padding.only(bottom=10, left=20, top=0,
+                                                                                             right=10),
+                                                                text_style=TextStyle(
+                                                                    color='#ff14a1',
+                                                                    size=16,
+                                                                    weight=FontWeight.W_600
+                                                                )
+                                                            )
+                                                        ),
+                                                        Container(
+                                                            height=40,
+                                                            width=40,
+                                                            bgcolor='#C5007F',
+                                                            border_radius=BorderRadius(top_right=5, top_left=0,
+                                                                                       bottom_left=0, bottom_right=5),
+                                                            content=Icon(
+                                                                icons.SEARCH
+                                                            )
+                                                        ),
+                                                        Row(
+                                                            spacing=15,
+                                                            controls=[
+                                                                Container(
+                                                                    # margin=Margin(left=800, top=0,right=10,bottom=0),
+                                                                    content=Stack(
+                                                                        controls=[
 
+                                                                            Container(
+
+                                                                                content=Icon(
+                                                                                    icons.NOTIFICATIONS,
+                                                                                    size=28,
+                                                                                    color='#c70077',
+                                                                                ),
+                                                                                margin=10,
+                                                                            ),
+                                                                            Container(
+                                                                                height=15,
+                                                                                width=18,
+                                                                                bgcolor=None,
+                                                                                right=3,
+                                                                                top=11,
+                                                                                alignment=alignment.center,
+                                                                                content=Text(
+                                                                                    value='1',
+                                                                                    size=12,
+                                                                                )
+                                                                            )
+                                                                        ]
+                                                                    ),
+
+                                                                ),
+                                                                Container(
+                                                                    height=40,
+                                                                    width=1,
+                                                                    bgcolor='#C5007F',
+                                                                ),
+                                                                Container(
+                                                                    margin=12,
+                                                                    height=40,
+                                                                    content=Text(
+                                                                        value=f'Баланс равен: 0',
+                                                                        size=16,
+                                                                        text_align='center',
+                                                                    ),
+                                                                ),
+                                                                Container(
+                                                                    height=40,
+                                                                    width=1,
+                                                                    bgcolor='#C5007F',
+                                                                ),
+                                                                CircleAvatar(
+                                                                    foreground_image_url="",
+                                                                    radius=15,
+                                                                )
+                                                            ]
                                                         ),
-                                                        Container(
-                                                            height=40,
-                                                            width=1,
-                                                            bgcolor='#C5007F',
-                                                        ),
-                                                        Container(
-                                                            margin=12,
-                                                            height=40,
-                                                            content=Text(
-                                                                value=f'Баланс равен: 0',
-                                                                size=16,
-                                                                text_align='center',
-                                                            ),
-                                                        ),
-                                                        Container(
-                                                            height=40,
-                                                            width=1,
-                                                            bgcolor='#C5007F',
-                                                        ),
-                                                        CircleAvatar(
-                                                            foreground_image_url="",
-                                                            radius=15,
-                                                        )
+
                                                     ]
-                                                ),
+                                                )
 
                                             ]
                                         )
-
-                                    ]
-                                )
+                                    ),
+                                ]
                             ),
+
+
 
                             Column(
                                 expand=True,

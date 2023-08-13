@@ -1,21 +1,20 @@
 import os
+
+import requests
 from flet import *
 from utils.color import *
 import pickle
-import requests
+from flask import Flask, render_template
 class IndividualTask(Container):
     def __init__(self, page:Page):
         super().__init__()
-        print('токеннн')
-        with open('../token.pickle', 'rb') as file:
-            token = pickle.load(file)
-            print(token)
         page.padding = 0
         self.expand = True
         self.bgcolor = bgc,
         self.getIndividualTask = Container(
 
         )
+        # left nav bar
         self.content = Row(
             spacing=0,
             controls=[
@@ -208,6 +207,7 @@ class IndividualTask(Container):
                         ]
                     )
                 ),
+                #top nav bar
                 Container(
                     expand=True,
                     bgcolor=bgc,
@@ -325,7 +325,7 @@ class IndividualTask(Container):
                                     ]
                                 )
                             ),
-
+                            #main box
                             Column(
                                 expand=True,
                                 scroll='auto',
@@ -337,6 +337,7 @@ class IndividualTask(Container):
                                           controls=[
                                               Row(
                                                   controls=[
+
                                                       Container(
                                                           width=40,
                                                           height=40,
@@ -368,19 +369,210 @@ class IndividualTask(Container):
         os.remove('../token.pickle')
 
 
+# import requests
+# from flet import *
+# from utils.color import *
+# import pickle
+# from flask import Flask, render_template
+# class IndividualTask(Container):
+#     def __init__(self, page:Page):
+#         super().__init__()
+#         page.padding = 0
+#         self.expand = True
+#         self.bgcolor = bgc,
+#         self.getIndividualTask = Container(
+#
+#         )
+#         # left nav bar
+#         self.content = Row(
+#             spacing=0,
+#             controls=[
+#                 Container(
+#                     width=220,
+#                     bgcolor='#C5007F',
+#                     padding=padding.only(top=20, left=10, right=10),
+#
+#                     content=Column(
+#                         controls=[
+#                             Row(
+#                                 controls=[
+#                                     Icon(
+#                                         icons.PERSON,
+#                                         size=50,
+#                                         color='white'
+#                                     ),
+#                                     Text(
+#                                         'Individual Task',
+#                                         size=16,
+#                                         color='white',
+#                                         weight='bold',
+#                                         line_height=50
+#                                     )
+#                                 ]
+#                             ),
+#                             Row(
+#                                 controls=[
+#                                     Text(
+#                                         'Dashboard',
+#                                         size=14,
+#                                         color='white',
+#                                         weight='bold',
+#                                         line_height=40
+#                                     )
+#                                 ]
+#                             ),
+#
+#                             Row(
+#                                 controls=[
+#                                     Text(
+#                                         'Create Task',
+#                                         size=14,
+#                                         color='white',
+#                                         weight='bold',
+#                                         line_height=40
+#                                     )
+#                                 ]
+#                             ),
+#                             Row(
+#                                 controls=[
+#                                     Text(
+#                                         'View Task',
+#                                         size=14,
+#                                         color='white',
+#                                         weight='bold',
+#                                         line_height=40
+#                                     )
+#                                 ]
+#                             ),
+#                             Row(
+#                                 controls=[
+#                                     Text(
+#                                         'My Profile',
+#                                         size=14,
+#                                         color='white',
+#                                         weight='bold',
+#                                         line_height=40
+#                                     )
+#                                 ]
+#                             ),
+#                             Row(
+#                                 controls=[
+#                                     Text(
+#                                         'Logout',
+#                                         size=14,
+#                                         color='white',
+#                                         weight='bold',
+#                                         line_height=40
+#                                     )
+#                                 ]
+#                             ),
+#                         ]
+#                     )
+#                 ),
+#                 Container(
+#                     width=100,
+#                     bgcolor='white'
+#                 ),
+#                 Container(
+#                     width=860,
+#                     padding=padding.only(top=20, left=20, right=20),
+#                     content=Column(
+#                         controls=[
+#                             Row(
+#                                 controls=[
+#                                     Text(
+#                                         'View Task',
+#                                         size=20,
+#                                         weight='bold',
+#                                         line_height=40
+#                                     )
+#                                 ],
+#                                 spacing=0,
+#                                 padding=padding.only(bottom=20)
+#                             ),
+#                             Row(
+#                                 controls=[
+#                                     Column(
+#                                         controls=[
+#                                             Text(
+#                                                 'Task123',
+#                                                 size=16,
+#                                                 weight='bold',
+#                                                 line_height=35
+#                                             ),
+#                                             Text(
+#                                                 'Description: ',
+#                                                 size=12,
+#                                                 weight='bold',
+#                                                 line_height=30
+#                                             ),
+#                                             Text(
+#                                                 'This is task description',
+#                                                 size=12,
+#                                                 line_height=20
+#                                             ),
+#                                             Text(
+#                                                 'Due Date: ',
+#                                                 size=12,
+#                                                 weight='bold',
+#                                                 line_height=30
+#                                             ),
+#                                             Text(
+#                                                 '11/11/2020',
+#                                                 size=12,
+#                                                 line_height=20
+#                                             ),
+#                                             Text(
+#                                                 'Assigned To: ',
+#                                                 size=12,
+#                                                 weight='bold',
+#                                                 line_height=30
+#                                             ),
+#                                             Text(
+#                                                 'John Doe',
+#                                                 size=12,
+#                                                 line_height=20
+#                                             ),
+#                                             Text(
+#                                                 'Status: ',
+#                                                 size=12,
+#                                                 weight='bold',
+#                                                 line_height=30
+#                                             ),
+#                                             Text(
+#                                                 'Completed',
+#                                                 size=12,
+#                                                 line_height=20,
+#                                                 color='green'
+#                                             ),
+#                                         ],
+#                                         spacing=0,
+#                                     )
+#                                 ]
+#                             )
+#                         ],
+#                         spacing=0
+#                     )
+#                 )
+#             ]
+#         )
+#
+#     def render(self):
+#         # make get request to fetch data
+#         response = requests.get('https://example.com/get_individual_task')
+#         if response.status_code == 200:
+#             task_data = response.json()
+#             # update task details from response
+#             self.content.controls[2].controls[1].controls[0].controls[0].text = task_data['task_name']
+#             self.content.controls[2].controls[1].controls[0].controls[2].controls[1].text = task_data['description']
+#             self.content.controls[2].controls[1].controls[0].controls[4].controls[1].text = task_data['due_date']
+#             self.content.controls[2].controls[1].controls[0].controls[6].controls[1].text = task_data['assigned_to']
+#             self.content.controls[2].controls[1].controls[0].controls[8].controls[1].text = task_data['status']
+#
+#         return super().render()
+#
+#
 
-    def getAdmin(self, e):
-        self.content.add(self, Column(
-            expand=True,
-            controls=[
-                Container(
-                    content=Text(
-                        value='asdasd',
-                        color='white',
-                        size=50,
-                    )
-                )
-            ]
-        ))
+
 
 

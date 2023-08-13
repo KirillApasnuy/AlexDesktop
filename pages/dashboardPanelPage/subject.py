@@ -6,9 +6,6 @@ class Subject(Container):
     def __init__(self, page:Page):
         super().__init__()
         print('токеннн')
-        with open('../token.pickle', 'rb') as file:
-            token = pickle.load(file)
-            print(token)
         page.padding = 0
         self.expand = True
         self.bgcolor = bgc,
@@ -333,19 +330,17 @@ class Subject(Container):
                                           controls=[
                                               Row(
                                                   controls=[
-                                                      Text(
-                                                          value="Hello,",
-                                                          size=30,
-                                                          color='#5a5c69',
-                                                          weight=FontWeight.W_300
-
-                                                      ),
-                                                      Text(
-                                                          value='world',
-                                                          size=30,
-                                                          color='#5a5c69',
-                                                          weight=FontWeight.W_700,
-
+                                                      Container(
+                                                          width=40,
+                                                          height=40,
+                                                          bgcolor='#C5007F',
+                                                          border_radius=30,
+                                                          alignment=alignment.center,
+                                                          padding=5,
+                                                          content=Icon(
+                                                              icons.ADD
+                                                          ),
+                                                          on_click=lambda _: self.page.go('/me/subject/create')
                                                       )
                                                   ]
                                               ),

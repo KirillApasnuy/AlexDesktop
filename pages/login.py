@@ -1,5 +1,4 @@
-import pickle
-import os
+from servic.generatePickleFile import generatePickleFile
 from flet import *
 from utils.color import *
 from dbmethod.postLoginSchoolboy import *
@@ -136,11 +135,10 @@ class Login(Container):
             token = postLoginSchoolboy(name, password)
 
 
-            # self.page.splash = None
-            # self.page.update()
+            self.page.splash = None
+            self.page.update()
             print('asd')
             print(token)
-            tokenJWT = token
 
 
 
@@ -148,13 +146,9 @@ class Login(Container):
             if token != None:
                 print(777)
                 self.page.go('/me')
-                try:
-                    os.remove('../token.pickle')
-                    # print('удаленно успешно')
-                    with open('token.pickle', 'wb') as file:
-                        pickle.dump(tokenJWT, file)
-                except OSError:
-                    print('error for delete token.pickle')
+                generatePickleFile(token)
+
+
             else:
                 self.page.snack_bar = SnackBar(
                     Text(

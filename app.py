@@ -1,5 +1,5 @@
-# from flet import ft
 from flet import *
+
 from pages.login import Login
 from pages.singup import Singup
 from pages.dashboard import DashBoard
@@ -12,6 +12,9 @@ from pages.dashboardPanelPage.teacher import *
 from pages.dashboardPanelPage.admin import *
 from pages.dashboardPanelPage.subject import *
 
+from dbmethod.create.createSubject import *
+from dbmethod.create.createGame import *
+from dbmethod.create.crateQuiz import *
 from dbmethod.create.createIndividualTask import *
 
 class Main(UserControl):
@@ -27,7 +30,7 @@ class Main(UserControl):
 
     def init_helper(self,):
         self.page.on_route_change = self.on_route_change
-        self.page.go('/login')
+        self.page.go('/me')
 
     def on_route_change(self, route):
         new_page = {
@@ -42,6 +45,9 @@ class Main(UserControl):
             "/me/subject": Subject,
             "/me/teacher": Teacher,
             "/me/individualtask/create": CreateIndividualTask,
+            "/me/quiz/create": CreateQuiz,
+            "/me/gameshop/create": CreateGame,
+            "/me/subject/create": CreateSubject,
             "/forgotpassword": FogotPassword
         }[self.page.route](self.page)
 
@@ -53,5 +59,5 @@ class Main(UserControl):
             )
         )
 
-app(target=Main, assets_dir='assets', view=WEB_BROWSER)
+app(target=Main, assets_dir='assets')
 

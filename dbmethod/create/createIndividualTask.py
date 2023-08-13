@@ -4,6 +4,8 @@ from utils.color import *
 import pickle
 import requests
 import json
+from servic.generatePickleFile import *
+
 class CreateIndividualTask(Container):
     def __init__(self, page: Page):
         super().__init__()
@@ -136,27 +138,29 @@ class CreateIndividualTask(Container):
             ]
         )
     def createIndividualtask(self, e):
-        with open('../token.pickle', 'rb') as file:
-            token = pickle.load(file)
+        token = generatePickleFile()
         print(token)
-        url = 'http://localhost:5000/alex/subject/'
-        subject = self.subject_box.content.value
-        topic = self.topic_box.content.value
-        value = self.value_box.content.value
-        headers = {'Authorization': f'Bearer{token}'}
-        payload = {'subject': subject,
-                   'topic': topic,
-                   'value': value
-                                  }
-        res = requests.post(url=url, json=payload, headers=headers)
-        values = res.text
-        json_value = json.loads(values[values.index('{'):values.rindex('}') + 1])
-        message = json_value['message']
-        self.page.snack_bar = SnackBar(
-            Text(
-                message
-            )
+        if token != None:
+            print('есть токен в функции')
+            url = 'http://localhost:5000/alex/individualTask/'
+            subject = self.subject_box.content.value
+            topic = self.topic_box.content.value
+            value = self.value_box.content.value
+            headers = {'Authorization': 'Bearer {}'.format(token)}
+            payload = {'subject': subject,
+                       'topic': topic,
+                       'value': value}
+            res = requests.post(url=url, json=payload, headers=headers)
+            values = res.text
+            print(values)
+            json_value = json.loads(values[values.index('{'):values.rindex('}') + 1])
+            print(json_value)
+            message = json_value['message']
+            self.page.snack_bar = SnackBar(
+                Text(
+                    message
+                )
 
-        )
-        self.page.snack_bar.open = True
-        self.page.update()
+            )
+            self.page.snack_bar.open = True
+            self.page.update()
