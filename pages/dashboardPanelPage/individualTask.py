@@ -1,17 +1,114 @@
-import os
+import json
 
-import requests
+# import tts
+from readAnswel import *
 from flet import *
 from utils.color import *
+import random
+import requests
+import smtplib
 import pickle
-from flask import Flask, render_template
+
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+url = "http://localhost:5000/alex/individualTask"  # URL, откуда вы хотите получить данные
+
+response = requests.get(url)  # Выполнить GET-запрос
+data = json.loads(response.text)
+i = random.randrange(0, len(data))
+data1 = data[i]
+i = random.randrange(0, len(data))
+data2 = data[i]
+i = random.randrange(0, len(data))
+data3 = data[i]
+i = random.randrange(0, len(data))
+data4 = data[i]
+i = random.randrange(0, len(data))
+data5 = data[i]
+i = random.randrange(0, len(data))
+data6 = data[i]
+i = random.randrange(0, len(data))
+data7 = data[i]
+i = random.randrange(0, len(data))
+data8 = data[i]
+value = ''
+print(data)  # Вывести массив данных
+subject1 = data1['subject']
+topic1 = data1['topic']
+value1 = data1['value']
+subject2 = data2['subject']
+topic2 = data2['topic']
+value2 = data2['value']
+subject3 = data3['subject']
+topic3 = data3['topic']
+value3 = data3['value']
+subject4 = data4['subject']
+topic4 = data4['topic']
+value4 = data4['value']
+subject5 = data5['subject']
+topic5 = data5['topic']
+value5 = data5['value']
+subject6 = data6['subject']
+topic6 = data6['topic']
+value6 = data6['value']
+subject7 = data7['subject']
+topic7 = data7['topic']
+value7 = data7['value']
+subject8 = data8['subject']
+topic8 = data8['topic']
+value8 = data8['value']
+answel = readAnswer()
 class IndividualTask(Container):
+
     def __init__(self, page:Page):
         super().__init__()
+        data = requests.get('http://localhost:5000/alex/individualTask')
+        print(data)
         page.padding = 0
         self.expand = True
         self.bgcolor = bgc,
-        self.getIndividualTask = Container(
+        self.answer_box = Container(
+
+            content=TextField(
+
+
+                border=InputBorder.NONE,
+                bgcolor='#a6006c',
+                content_padding=padding.only(top=5, bottom=80, left=20, right=20),
+                hint_style=TextStyle(
+                    size=14,
+                    color=input_col,
+                ),
+                hint_text='Введите ответ',
+
+                value=answel,
+
+                cursor_color=input_col,
+                text_style=TextStyle(
+                    size=16,
+                    color='white',
+
+                ),
+            ),
+            border_radius=20,
+        )
+
+        self.create = Container(
+                width=40,
+                height=40,
+                bgcolor='#C5007F',
+                border_radius=30,
+                alignment=alignment.center,
+                padding=5,
+                content=Icon(
+                icons.ADD
+                ),
+                on_click=lambda _: self.page.go(
+                '/me/individualtask/create')
+        )
+        self.tasks = Column(
+            height=1000,
+            scroll='auto',
 
         )
         # left nav bar
@@ -90,49 +187,7 @@ class IndividualTask(Container):
                             ),
                             Container(
                                 Text(
-                                    value='Предметы',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.page.go('/me/subject')
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Учителя',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.page.go('/me/teacher')
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Администрация',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.getAdmin
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Магазин игр',
+                                    value='Игры',
                                     size=16,
                                     color='white',
                                     weight=FontWeight.W_300,
@@ -158,24 +213,6 @@ class IndividualTask(Container):
                                 height=0.5,
                                 thickness=.5
                             ),
-                            # Row(
-                            #     alignment='center',
-                            #     controls=[
-                            #         Container(
-                            #             alignment=alignment.center,
-                            #             height=35,
-                            #             width=35,
-                            #             bgcolor='white',
-                            #             border_radius= 20,
-                            #             content=Icon(
-                            #                 icons.ARROW_BACK_IOS_SHARP,
-                            #                 color='black',
-                            #                 size=15,
-                            #             )
-                            #
-                            #         )
-                            #     ]
-                            # )
                             Container(
                                 margin=Margin(left=0,right=0,bottom=0,top=470),
                                 height=100,
@@ -187,7 +224,7 @@ class IndividualTask(Container):
                                     alignment='center',
                                     controls=[
                                         Container(
-                                            on_click=lambda _: self.page.go('/login') & self.logout,
+                                            on_click=lambda _: self.page.go('/login'),
                                             alignment=alignment.center,
                                             height=35,
                                             width=110,
@@ -298,20 +335,6 @@ class IndividualTask(Container):
                                                             width=1,
                                                             bgcolor='#C5007F',
                                                         ),
-                                                        Container(
-                                                            margin=12,
-                                                            height=40,
-                                                            content=Text(
-                                                                value=f'Баланс равен: 0',
-                                                                size=16,
-                                                                text_align='center',
-                                                            ),
-                                                        ),
-                                                        Container(
-                                                            height=40,
-                                                            width=1,
-                                                            bgcolor='#C5007F',
-                                                        ),
                                                         CircleAvatar(
                                                             foreground_image_url="",
                                                             radius=15,
@@ -326,37 +349,400 @@ class IndividualTask(Container):
                                 )
                             ),
                             #main box
-                            Column(
-                                expand=True,
-                                scroll='auto',
+                            Row(
                                 controls=[
-                                    Container(
-                                      padding=20,
-                                      content=Row(
-                                          alignment='spaceBetween',
-                                          controls=[
-                                              Row(
-                                                  controls=[
+                                    Column(
+                                        controls=[
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content = Column(
 
-                                                      Container(
-                                                          width=40,
-                                                          height=40,
-                                                          bgcolor='#C5007F',
-                                                          border_radius=30,
-                                                          alignment=alignment.center,
-                                                          padding=5,
-                                                          content=Icon(
-                                                              icons.ADD
-                                                          ),
-                                                          on_click=lambda _: self.page.go('/me/individualtask/create')
-                                                      )
+                                                    horizontal_alignment='center',
+                                                            controls=[
+                                                                Text(
+                                                                    value=subject1,
+                                                                    size=25,
+                                                                    color='white'
+                                                                ),
+                                                                Text(
+                                                                    value=topic1,
+                                                                    size=23,
+                                                                    color='white'
+                                                                ),
+                                                                Text(
+                                                                    value=value1,
+                                                                    size=21,
+                                                                    color='white',
+                                                                ),
+                                                                self.answer_box,
+                                                                Container(
+                                                                    # margin=5,
+                                                                    width=100,
+                                                                    height=40,
+                                                                    margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                                    border_radius=12,
+                                                                    alignment=alignment.center,
+                                                                    bgcolor='#ff1ca4',
+                                                                    content=Text(
+                                                                        value='Отправить',
+                                                                        color='white',
+                                                                        size=16,
+                                                                    ),
+                                                                    on_click=lambda _:self.pushTask(e=value1)
+                                                                )
+                                                            ]
+                                                        )
+                                            ),
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content=Column(
 
-                                                  ]
-                                              ),
-                                          ]
+                                                    horizontal_alignment='center',
+                                                    controls=[
+                                                        Text(
+                                                            value=subject2,
+                                                            size=25,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=topic2,
+                                                            size=23,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=value2,
+                                                            size=21,
+                                                            color='white',
+                                                        ),
+                                                        self.answer_box,
+                                                        Container(
+                                                            # margin=5,
+                                                            width=100,
+                                                            height=40,
+                                                            margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                            border_radius=12,
+                                                            alignment=alignment.center,
+                                                            bgcolor='#ff1ca4',
+                                                            content=Text(
+                                                                value='Отправить',
+                                                                color='white',
+                                                                size=16,
+                                                            ),
+                                                            on_click=lambda _:self.pushTask(e=value2)
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                        ]
 
-                                      )
+
+
                                     ),
+                                    Column(
+                                        controls=[
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content=Column(
+
+                                                    horizontal_alignment='center',
+                                                    controls=[
+                                                        Text(
+                                                            value=subject3,
+                                                            size=25,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=topic3,
+                                                            size=23,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=value3,
+                                                            size=21,
+                                                            color='white',
+                                                        ),
+                                                        self.answer_box,
+                                                        Container(
+                                                            # margin=5,
+                                                            width=100,
+                                                            height=40,
+                                                            margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                            border_radius=12,
+                                                            alignment=alignment.center,
+                                                            bgcolor='#ff1ca4',
+                                                            content=Text(
+                                                                value='Отправить',
+                                                                color='white',
+                                                                size=16,
+                                                            ),
+                                                            on_click=lambda _:self.pushTask(e=value3)
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content=Column(
+
+                                                    horizontal_alignment='center',
+                                                    controls=[
+                                                        Text(
+                                                            value=subject4,
+                                                            size=25,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=topic4,
+                                                            size=23,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=value4,
+                                                            size=21,
+                                                            color='white',
+                                                        ),
+                                                        self.answer_box,
+                                                        Container(
+                                                            # margin=5,
+                                                            width=100,
+                                                            height=40,
+                                                            margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                            border_radius=12,
+                                                            alignment=alignment.center,
+                                                            bgcolor='#ff1ca4',
+                                                            content=Text(
+                                                                value='Отправить',
+                                                                color='white',
+                                                                size=16,
+                                                            ),
+                                                            on_click=lambda _:self.pushTask(e=value4)
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                        ]
+
+                                    ),
+                                    Column(
+                                        controls=[
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content=Column(
+
+                                                    horizontal_alignment='center',
+                                                    controls=[
+                                                        Text(
+                                                            value=subject5,
+                                                            size=25,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=topic5,
+                                                            size=23,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=value5,
+                                                            size=21,
+                                                            color='white',
+                                                        ),
+                                                        self.answer_box,
+                                                        Container(
+                                                            # margin=5,
+                                                            width=100,
+                                                            height=40,
+                                                            margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                            border_radius=12,
+                                                            alignment=alignment.center,
+                                                            bgcolor='#ff1ca4',
+                                                            content=Text(
+                                                                value='Отправить',
+                                                                color='white',
+                                                                size=16,
+                                                            ),
+                                                            on_click=lambda _:self.pushTask(e=value5)
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content=Column(
+
+                                                    horizontal_alignment='center',
+                                                    controls=[
+                                                        Text(
+                                                            value=subject6,
+                                                            size=25,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=topic6,
+                                                            size=23,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=value6,
+                                                            size=21,
+                                                            color='white',
+                                                        ),
+                                                        self.answer_box,
+                                                        Container(
+                                                            # margin=5,
+                                                            width=100,
+                                                            height=40,
+                                                            margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                            border_radius=12,
+                                                            alignment=alignment.center,
+                                                            bgcolor='#ff1ca4',
+                                                            content=Text(
+                                                                value='Отправить',
+                                                                color='white',
+                                                                size=16,
+                                                            ),
+                                                            on_click=lambda _:self.pushTask(e=value6)
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                        ]
+
+                                    ),
+                                    Column(
+                                        controls=[
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content=Column(
+
+                                                    horizontal_alignment='center',
+                                                    controls=[
+                                                        Text(
+                                                            value=subject7,
+                                                            size=25,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=topic7,
+                                                            size=23,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=value7,
+                                                            size=21,
+                                                            color='white',
+                                                        ),
+                                                        self.answer_box,
+                                                        Container(
+                                                            # margin=5,
+                                                            width=100,
+                                                            height=40,
+                                                            margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                            border_radius=12,
+                                                            alignment=alignment.center,
+                                                            bgcolor='#ff1ca4',
+                                                            content=Text(
+                                                                value='Отправить',
+                                                                color='white',
+                                                                size=16,
+                                                            ),
+                                                            on_click=lambda _:self.pushTask(e=value7)
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                            Container(
+                                                border_radius=20,
+                                                margin=10,
+                                                width=300,
+                                                height=450,
+                                                bgcolor='#C5007F',
+                                                alignment=alignment.center,
+                                                padding=padding.only(left=5, right=5, top=10, bottom=10),
+                                                content=Column(
+
+                                                    horizontal_alignment='center',
+                                                    controls=[
+                                                        Text(
+                                                            value=subject8,
+                                                            size=25,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=topic8,
+                                                            size=23,
+                                                            color='white'
+                                                        ),
+                                                        Text(
+                                                            value=value8,
+                                                            size=21,
+                                                            color='white',
+                                                        ),
+                                                        self.answer_box,
+                                                        Container(
+                                                            # margin=5,
+                                                            width=100,
+                                                            height=40,
+                                                            margin=Margin(left=10, right=10, bottom=10, top=50),
+                                                            border_radius=12,
+                                                            alignment=alignment.center,
+                                                            bgcolor='#ff1ca4',
+                                                            content=Text(
+                                                                value='Отправить',
+                                                                color='white',
+                                                                size=16,
+                                                            ),
+                                                            on_click=lambda _:self.pushTask(e=value8)
+                                                        )
+                                                    ]
+                                                )
+                                            ),
+                                        ]
+
+                                    ),
+
+                                    self.create,
                                 ]
                             )
                         ]
@@ -364,215 +750,47 @@ class IndividualTask(Container):
                 )
             ]
         )
-    def logout(self,e):
 
-        os.remove('../token.pickle')
+    def pushTask(self, e):
+        # print(e)
+        # e = int(e)
+        # e = data[e]['value']
+        print(e)
+        try:
+            with open('../name.pickle', 'rb') as file:
+                schoolboy = pickle.load(file)
+            answelTask = self.answer_box.content.value
+            text = f'{schoolboy}. {e}: {answelTask}.'
+            emailAlex = 'alexvoiceassistent@yandex.ru'
+            passwordAlex = 'ejivdpmxsbacfvxo'
+            msg = MIMEMultipart()
+            msg['From'] = emailAlex
+            msg['To'] = emailAlex
+            msg['Subject'] = 'Ответ на задание'
+            msg.attach(
+                MIMEText(text, 'plain')
+            )
 
-
-# import requests
-# from flet import *
-# from utils.color import *
-# import pickle
-# from flask import Flask, render_template
-# class IndividualTask(Container):
-#     def __init__(self, page:Page):
-#         super().__init__()
-#         page.padding = 0
-#         self.expand = True
-#         self.bgcolor = bgc,
-#         self.getIndividualTask = Container(
-#
-#         )
-#         # left nav bar
-#         self.content = Row(
-#             spacing=0,
-#             controls=[
-#                 Container(
-#                     width=220,
-#                     bgcolor='#C5007F',
-#                     padding=padding.only(top=20, left=10, right=10),
-#
-#                     content=Column(
-#                         controls=[
-#                             Row(
-#                                 controls=[
-#                                     Icon(
-#                                         icons.PERSON,
-#                                         size=50,
-#                                         color='white'
-#                                     ),
-#                                     Text(
-#                                         'Individual Task',
-#                                         size=16,
-#                                         color='white',
-#                                         weight='bold',
-#                                         line_height=50
-#                                     )
-#                                 ]
-#                             ),
-#                             Row(
-#                                 controls=[
-#                                     Text(
-#                                         'Dashboard',
-#                                         size=14,
-#                                         color='white',
-#                                         weight='bold',
-#                                         line_height=40
-#                                     )
-#                                 ]
-#                             ),
-#
-#                             Row(
-#                                 controls=[
-#                                     Text(
-#                                         'Create Task',
-#                                         size=14,
-#                                         color='white',
-#                                         weight='bold',
-#                                         line_height=40
-#                                     )
-#                                 ]
-#                             ),
-#                             Row(
-#                                 controls=[
-#                                     Text(
-#                                         'View Task',
-#                                         size=14,
-#                                         color='white',
-#                                         weight='bold',
-#                                         line_height=40
-#                                     )
-#                                 ]
-#                             ),
-#                             Row(
-#                                 controls=[
-#                                     Text(
-#                                         'My Profile',
-#                                         size=14,
-#                                         color='white',
-#                                         weight='bold',
-#                                         line_height=40
-#                                     )
-#                                 ]
-#                             ),
-#                             Row(
-#                                 controls=[
-#                                     Text(
-#                                         'Logout',
-#                                         size=14,
-#                                         color='white',
-#                                         weight='bold',
-#                                         line_height=40
-#                                     )
-#                                 ]
-#                             ),
-#                         ]
-#                     )
-#                 ),
-#                 Container(
-#                     width=100,
-#                     bgcolor='white'
-#                 ),
-#                 Container(
-#                     width=860,
-#                     padding=padding.only(top=20, left=20, right=20),
-#                     content=Column(
-#                         controls=[
-#                             Row(
-#                                 controls=[
-#                                     Text(
-#                                         'View Task',
-#                                         size=20,
-#                                         weight='bold',
-#                                         line_height=40
-#                                     )
-#                                 ],
-#                                 spacing=0,
-#                                 padding=padding.only(bottom=20)
-#                             ),
-#                             Row(
-#                                 controls=[
-#                                     Column(
-#                                         controls=[
-#                                             Text(
-#                                                 'Task123',
-#                                                 size=16,
-#                                                 weight='bold',
-#                                                 line_height=35
-#                                             ),
-#                                             Text(
-#                                                 'Description: ',
-#                                                 size=12,
-#                                                 weight='bold',
-#                                                 line_height=30
-#                                             ),
-#                                             Text(
-#                                                 'This is task description',
-#                                                 size=12,
-#                                                 line_height=20
-#                                             ),
-#                                             Text(
-#                                                 'Due Date: ',
-#                                                 size=12,
-#                                                 weight='bold',
-#                                                 line_height=30
-#                                             ),
-#                                             Text(
-#                                                 '11/11/2020',
-#                                                 size=12,
-#                                                 line_height=20
-#                                             ),
-#                                             Text(
-#                                                 'Assigned To: ',
-#                                                 size=12,
-#                                                 weight='bold',
-#                                                 line_height=30
-#                                             ),
-#                                             Text(
-#                                                 'John Doe',
-#                                                 size=12,
-#                                                 line_height=20
-#                                             ),
-#                                             Text(
-#                                                 'Status: ',
-#                                                 size=12,
-#                                                 weight='bold',
-#                                                 line_height=30
-#                                             ),
-#                                             Text(
-#                                                 'Completed',
-#                                                 size=12,
-#                                                 line_height=20,
-#                                                 color='green'
-#                                             ),
-#                                         ],
-#                                         spacing=0,
-#                                     )
-#                                 ]
-#                             )
-#                         ],
-#                         spacing=0
-#                     )
-#                 )
-#             ]
-#         )
-#
-#     def render(self):
-#         # make get request to fetch data
-#         response = requests.get('https://example.com/get_individual_task')
-#         if response.status_code == 200:
-#             task_data = response.json()
-#             # update task details from response
-#             self.content.controls[2].controls[1].controls[0].controls[0].text = task_data['task_name']
-#             self.content.controls[2].controls[1].controls[0].controls[2].controls[1].text = task_data['description']
-#             self.content.controls[2].controls[1].controls[0].controls[4].controls[1].text = task_data['due_date']
-#             self.content.controls[2].controls[1].controls[0].controls[6].controls[1].text = task_data['assigned_to']
-#             self.content.controls[2].controls[1].controls[0].controls[8].controls[1].text = task_data['status']
-#
-#         return super().render()
-#
-#
-
-
-
-
+            server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
+            server.ehlo(emailAlex)
+            server.login(emailAlex, passwordAlex)
+            server.auth_plain()
+            server.send_message(msg)
+            server.quit()
+            # tts.va_speak('Ответ отправлен на почту учителя')
+            self.page.snack_bar = SnackBar(
+                    Text(
+                        'Ответ отправлен на почту учителя'
+                    )
+                )
+            self.page.snack_bar.open = True
+            self.page.update()
+        except:
+            # tts.va_speak('ОШИБКА Не удалось отправить сообщение')
+            self.page.snack_bar = SnackBar(
+                Text(
+                    'ОШИБКА Не удалось отправить сообщение =( '
+                )
+            )
+            self.page.snack_bar.open = True
+            self.page.update()

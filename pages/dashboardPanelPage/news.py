@@ -85,49 +85,7 @@ class News(Container):
                             ),
                             Container(
                                 Text(
-                                    value='Предметы',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.page.go('/me/subject')
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Учителя',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.page.go('/me/teacher')
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Администрация',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.getAdmin
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Магазин игр',
+                                    value='Игры',
                                     size=16,
                                     color='white',
                                     weight=FontWeight.W_300,
@@ -153,24 +111,6 @@ class News(Container):
                                 height=0.5,
                                 thickness=.5
                             ),
-                            # Row(
-                            #     alignment='center',
-                            #     controls=[
-                            #         Container(
-                            #             alignment=alignment.center,
-                            #             height=35,
-                            #             width=35,
-                            #             bgcolor='white',
-                            #             border_radius= 20,
-                            #             content=Icon(
-                            #                 icons.ARROW_BACK_IOS_SHARP,
-                            #                 color='black',
-                            #                 size=15,
-                            #             )
-                            #
-                            #         )
-                            #     ]
-                            # )
                             Container(
                                 margin=Margin(left=0,right=0,bottom=0,top=470),
                                 height=100,
@@ -332,18 +272,15 @@ class News(Container):
                                               Row(
                                                   controls=[
                                                       Container(
-                                                          width=40,
-                                                          height=40,
+                                                          border_radius=20,
                                                           bgcolor='#C5007F',
-                                                          border_radius=30,
-                                                          alignment=alignment.center,
-                                                          padding=5,
-                                                          content=Icon(
-                                                              icons.ADD
-                                                          ),
-                                                          on_click=lambda _: self.page.go('/me/news/create')
+                                                          padding=10,
+                                                          content=Text(
+                                                              value='Пока что нечем тебя порадовать =(',
+                                                              color='white',
+                                                              size=35,
+                                                          )
                                                       )
-
                                                   ]
                                               ),
                                           ]
@@ -372,27 +309,3 @@ class News(Container):
         }
 
         response = requests.get(url, headers=headers, params=querystring)
-
-        # self.page.controls[
-        #     Row(
-        #         Container(
-        #             map()
-        #         )
-        #     )
-        # ]
-
-    def getAdmin(self, e):
-        self.content.add(self, Column(
-            expand=True,
-            controls=[
-                Container(
-                    content=Text(
-                        value='asdasd',
-                        color='white',
-                        size=50,
-                    )
-                )
-            ]
-        ))
-
-

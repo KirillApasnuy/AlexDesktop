@@ -3,10 +3,6 @@ from utils.color import *
 from takePhoto import take_screenshot_from_cam
 from utils.validation import Validator
 from dbmethod.postRegSchoolboy import postRegSchoolboy
-import cv2
-import os
-import time
-# import flet as ft
 class Singup(Container):
     def __init__(self, page:Page):
         super().__init__()
@@ -16,45 +12,7 @@ class Singup(Container):
         self.validator = Validator()
         self.bgcolor ='#3d3d3d'
         self.error_border = border.all(width=1, color='red',)
-        self.firstname_box = Container(
 
-            content=TextField(
-                border=InputBorder.NONE,
-                bgcolor='#a6006c',
-                content_padding=padding.only(top=0, bottom=0, left=20, right=20),
-                hint_style=TextStyle(
-                    size=14,
-                    color=input_col,
-                ),
-                hint_text='Введите имя',
-                cursor_color=input_col,
-                text_style=TextStyle(
-                    size=16,
-                    color='white'
-                )
-
-            ),
-            border_radius=20,
-        )
-        self.lastname_box = Container(
-
-            content=TextField(
-                border=InputBorder.NONE,
-                bgcolor='#a6006c',
-                content_padding=padding.only(top=0, bottom=0, left=20, right=20),
-                hint_style=TextStyle(
-                    size=14,
-                    color=input_col,
-                ),
-                hint_text='Введите фамилию',
-                cursor_color=input_col,
-                text_style=TextStyle(
-                    size=16,
-                    color='white'
-                )
-            ),
-            border_radius=20,
-        )
         self.email_box = Container(
 
             content=TextField(
@@ -84,7 +42,7 @@ class Singup(Container):
                     size=14,
                     color=input_col,
                 ),
-                hint_text='Пропишите ИФ на лат. пример: kirill_beziazukov',
+                hint_text='Введите ИФ на лат. пример: kirill_beziazukov',
                 cursor_color=input_col,
                 text_style=TextStyle(
                     size=16,
@@ -132,9 +90,6 @@ class Singup(Container):
                                 color='white',
                                 text_align='center'
                             ),
-                            self.firstname_box,
-
-                            self.lastname_box,
                             self.imgFace_box,
                             self.email_box,
                             self.password_box,
@@ -173,20 +128,6 @@ class Singup(Container):
                                             ),
                                             on_click=self.singup,
                                         ),
-                                        # Container(
-                                        #     alignment=alignment.center,
-                                        #
-                                        #     bgcolor='#ff00a6',
-                                        #     border_radius=15,
-                                        #     width=155,
-                                        #     height=40,
-                                        #     content=Text(
-                                        #         value='Сделать фото',
-                                        #         color='white',
-                                        #         size=18,
-                                        #     ),
-                                        #     on_click=self.photo,
-                                        # ),
                                     ]
                                 )
                             )
@@ -201,31 +142,19 @@ class Singup(Container):
         )
 
     def singup(self, e):
-        first_name = self.firstname_box.content.value
-        last_name = self.lastname_box.content.value
         email = self.email_box.content.value
         imgFace = self.imgFace_box.content.value
         password = self.password_box.content.value
         if not self.validator.isValidImgface(imgFace):
             self.imgFace_box.border = self.error_border
             self.imgFace_box.update()
-        if not self.validator.isValidName(first_name and last_name):
-            self.firstname_box.border = self.error_border
-            self.firstname_box.update()
-            self.lastname_box.border = self.error_border
-            self.lastname_box.update()
         if not self.validator.isValidPassword(password):
             self.password_box.border = self.error_border
             self.password_box.update()
 
         self.event_handlers
-        print('перед запуском pRS')
         postRegSchoolboy(imgFace, password, email)
-        print('после запуска pRS')
-        print(e)
-        print('перед запуском фотографа')
         take_screenshot_from_cam(imgFace)
-        print('после запуска фотографа')
     # def photo(self, e ):
 
         # cap = cv2.VideoCapture(0)

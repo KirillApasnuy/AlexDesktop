@@ -12,7 +12,7 @@ def postRegSchoolboy(imgFace, password, email):
     "email": email,
     "imgFace": imgFace,
     "password": password,
-    "role": 'admin'
+    "role": 'schoolboy'
     }
     print(payload)
     res = requests.post(url, json=payload)

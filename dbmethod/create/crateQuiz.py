@@ -14,7 +14,7 @@ class CreateQuiz(Container):
         self.validator = Validator()
         self.bgcolor = bgc
         self.error_border = border.all(width=1, color='red', )
-        self.name_box = Container(
+        self.subject_box = Container(
 
             content=TextField(
                 border=InputBorder.NONE,
@@ -71,6 +71,25 @@ class CreateQuiz(Container):
             ),
             border_radius=20,
         )
+        self.answer_box = Container(
+
+            content=TextField(
+                border=InputBorder.NONE,
+                bgcolor='#a6006c',
+                content_padding=padding.only(top=0, bottom=0, left=20, right=20),
+                hint_style=TextStyle(
+                    size=14,
+                    color=input_col,
+                ),
+                hint_text='Ответ',
+                cursor_color=input_col,
+                text_style=TextStyle(
+                    size=16,
+                    color='white'
+                )
+            ),
+            border_radius=20,
+        )
         self.content = Column(
             alignment='center',
             horizontal_alignment='center',
@@ -91,9 +110,10 @@ class CreateQuiz(Container):
                                 text_align='center'
                             ),
                             Container(height=0),
-                            self.name_box,
+                            self.subject_box,
                             self.topic_box,
                             self.value_box,
+                            self.answer_box,
                             Container(
 
                                 content=Row(
@@ -142,24 +162,35 @@ class CreateQuiz(Container):
         if token != None:
             print('есть токен в функции')
             url = 'http://localhost:5000/alex/quiz/'
-            name = self.name_box.content.value
+            subject = self.subject_box.content.value
             topic = self.topic_box.content.value
             value = self.value_box.content.value
+            answel = self.answer_box.content.value
             headers = {'Authorization': 'Bearer {}'.format(token)}
-            payload = {'subject': name,
+            payload = {'subject': subject,
                        'topic': topic,
-                       'value': value}
+                       'value': value,
+                       'answel': answel}
             res = requests.post(url=url, json=payload, headers=headers)
             values = res.text
-            print(values)
             json_value = json.loads(values[values.index('{'):values.rindex('}') + 1])
-            print(json_value)
-            message = json_value['message']
-            self.page.snack_bar = SnackBar(
-                Text(
-                    message
-                )
+            try:
+                message = json_value['message']
+                self.page.snack_bar = SnackBar(
+                    Text(
+                        message
+                    )
 
-            )
-            self.page.snack_bar.open = True
-            self.page.update()
+                )
+                self.page.snack_bar.open = True
+                self.page.update()
+            except:
+                self.page.snack_bar = SnackBar(
+                    Text(
+                        'Создано успешно!'
+                    )
+
+                )
+                self.page.snack_bar.open = True
+                self.page.update()
+

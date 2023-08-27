@@ -1,6 +1,9 @@
 import cv2
 import os
 
+# import tts
+
+
 def take_screenshot_from_cam(imgFace):
     cap = cv2.VideoCapture(0)
     count = 0
@@ -17,6 +20,7 @@ def take_screenshot_from_cam(imgFace):
         if ret:
             frame_id = int(round(cap.get(1)))
             # print(frame_id)
+            # tts.va_speak('улыбнись')
             cv2.imshow("frame", frame)
             k = cv2.waitKey(20)
 

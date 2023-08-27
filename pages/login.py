@@ -1,8 +1,11 @@
-from servic.generatePickleFile import generatePickleFile
 from flet import *
 from utils.color import *
 from dbmethod.postLoginSchoolboy import *
 from utils.validation import Validator
+
+from get import *
+name_data = readName()
+# print(readName())
 class Login(Container):
     def __init__(self, page:Page):
         super().__init__()
@@ -22,35 +25,38 @@ class Login(Container):
                     size=14,
                     color=input_col,
                 ),
+                value=name_data,
                 hint_text='Введите имя и фамилию',
+
+
                 cursor_color=input_col,
                 text_style=TextStyle(
                     size=16,
                     color='white'
-                )
+                ),
             ),
             border_radius=20,
         )
-        self.password_box = Container(
-
-            content=TextField(
-                border=InputBorder.NONE,
-                bgcolor='#a6006c',
-                content_padding=padding.only(top=0, bottom=0, left=20, right=20),
-                hint_style=TextStyle(
-                    size=14, color=input_col,
-
-                ),
-                hint_text='Введите пароль',
-                cursor_color='#c9c9c9',
-                text_style=TextStyle(
-                    size=16,
-                    color='white'
-                ),
-                password=True,
-            ),
-            border_radius=20,
-        )
+        # self.password_box = Container(
+        #
+        #     content=TextField(
+        #         border=InputBorder.NONE,
+        #         bgcolor='#a6006c',
+        #         content_padding=padding.only(top=0, bottom=0, left=20, right=20),
+        #         hint_style=TextStyle(
+        #             size=14, color=input_col,
+        #
+        #         ),
+        #         hint_text='Введите пароль',
+        #         cursor_color='#c9c9c9',
+        #         text_style=TextStyle(
+        #             size=16,
+        #             color='white'
+        #         ),
+        #         password=True,
+        #     ),
+        #     border_radius=20,
+        # )
         self.content = Column(
             alignment='center',
             horizontal_alignment='center',
@@ -71,7 +77,7 @@ class Login(Container):
                                 text_align='center'
                             ),
                             self.name_box,
-                            self.password_box,
+                            # self.password_box,
                             Container(height=0),
 
                             Container(
@@ -114,49 +120,49 @@ class Login(Container):
                 )
             ]
         )
-
+        # if self.name_box.content.value != None:
+        #     self.login
     def login(self, e):
         name = self.name_box.content.value
-        password = self.password_box.content.value
+        # password = self.password_box.content.value
 
         if not self.validator.isValidImgface(name):
             self.name_box.border = self.error_border
             self.name_box.update()
-
-        if not self.validator.isValidPassword(password):
-            self.password_box.border = self.error_border
-            self.password_box.update()
-
         else:
-            # self.page.splash = ProgressBar()
-            # self.page.update()
+            self.page.go('/me')
+        # if not self.validator.isValidPassword(password):
+        #     self.password_box.border = self.error_border
+        #     self.password_box.update()
 
-            print('начало метода post(log)')
-            token = postLoginSchoolboy(name, password)
-
-
-            self.page.splash = None
-            self.page.update()
-            print('asd')
-            print(token)
-
-
-
-
-            if token != None:
-                print(777)
-                self.page.go('/me')
-                generatePickleFile(token)
+        # else:
+        #     # self.page.splash = ProgressBar()
+        #     # self.page.update()
+        #
+        #     print('начало метода post(log)')
+        #     token = postLoginSchoolboy(name)
+        #
+        #
+        #     # self.page.splash = None
+        #     # self.page.update()
 
 
-            else:
-                self.page.snack_bar = SnackBar(
-                    Text(
-                        "Что-то не верно указано или не указано вовсе"
-                    )
-                )
-                self.page.snack_bar.open = True
-                self.page.update()
 
-                # generatePickleFile(token)
+
+            # if token != None:
+            #     print(777)
+            #
+            #     # generatePickleFile(token)
+            #
+            #
+            # else:
+            #     self.page.snack_bar = SnackBar(
+            #         Text(
+            #             "Что-то не верно указано или не указано вовсе"
+            #         )
+            #     )
+            #     self.page.snack_bar.open = True
+            #     self.page.update()
+            #
+            #     # generatePickleFile(token)
 

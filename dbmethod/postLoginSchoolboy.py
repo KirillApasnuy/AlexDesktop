@@ -1,7 +1,7 @@
 import requests
 import json
 import pickle
-def postLoginSchoolboy(name, password):
+def postLoginSchoolboy(name):
 
     print('начало post(login)')
     url = "http://localhost:5000/alex/schoolboy/login"
@@ -13,7 +13,6 @@ def postLoginSchoolboy(name, password):
         payload = {
             'first_name': first_name,
             'last_name': last_name,
-            'password': password
         }
         print(payload)
         print('отправленно успешно')
@@ -23,8 +22,8 @@ def postLoginSchoolboy(name, password):
         json_value = json.loads(values[values.index('{'):values.rindex('}') + 1])
         token = json_value['token']
         print('1')
-        # with open('token.pickle', 'wb') as file:
-        #     pickle.dump(token, file)
+        with open('../token.pickle', 'wb') as file:
+            pickle.dump(token, file)
         print(token)
 
 

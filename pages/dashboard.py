@@ -2,6 +2,8 @@ import os
 from flet import *
 from utils.color import *
 import pickle
+from get import readName
+schoolboy = readName()
 class DashBoard(Container):
     def __init__(self, page:Page):
         super().__init__()
@@ -86,49 +88,7 @@ class DashBoard(Container):
                             ),
                             Container(
                                 Text(
-                                    value='Предметы',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.page.go('/me/subject')
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Учителя',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.page.go('/me/teacher')
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Администрация',
-                                    size=16,
-                                    color='white',
-                                    weight=FontWeight.W_300,
-                                ),
-                                on_click=lambda _: self.page.go('/me/admin')
-                            ),
-                            Divider(
-                                color='white',
-                                height=0.5,
-                                thickness=.5
-                            ),
-                            Container(
-                                Text(
-                                    value='Магазин игр',
+                                    value='Игры',
                                     size=16,
                                     color='white',
                                     weight=FontWeight.W_300,
@@ -165,7 +125,7 @@ class DashBoard(Container):
                                     alignment='center',
                                     controls=[
                                         Container(
-                                            on_click=lambda _: self.page.go('/login') & self.logout,
+                                            on_click=lambda _: self.page.go('/login'),
                                             alignment=alignment.center,
                                             height=35,
                                             width=110,
@@ -197,6 +157,7 @@ class DashBoard(Container):
                                     Container(
                                         margin=Margin(left=5, top=5, bottom=0, right=5),
                                         height=70,
+
                                         shadow=BoxShadow(
                                             spread_radius=2,
                                             color=bgc
@@ -244,7 +205,7 @@ class DashBoard(Container):
                                                             spacing=15,
                                                             controls=[
                                                                 Container(
-                                                                    # margin=Margin(left=800, top=0,right=10,bottom=0),
+                                                                    margin=Margin(left=800, top=0,right=10,bottom=0),
                                                                     content=Stack(
                                                                         controls=[
 
@@ -278,22 +239,8 @@ class DashBoard(Container):
                                                                     width=1,
                                                                     bgcolor='#C5007F',
                                                                 ),
-                                                                Container(
-                                                                    margin=12,
-                                                                    height=40,
-                                                                    content=Text(
-                                                                        value=f'Баланс равен: 0',
-                                                                        size=16,
-                                                                        text_align='center',
-                                                                    ),
-                                                                ),
-                                                                Container(
-                                                                    height=40,
-                                                                    width=1,
-                                                                    bgcolor='#C5007F',
-                                                                ),
                                                                 CircleAvatar(
-                                                                    foreground_image_url="",
+                                                                    foreground_image_url=f"../dataset_from_cam/{schoolboy}",
                                                                     radius=15,
                                                                 )
                                                             ]
@@ -319,21 +266,93 @@ class DashBoard(Container):
                                       content=Row(
                                           alignment='spaceBetween',
                                           controls=[
-                                              Row(
+                                              Column(
                                                   controls=[
-                                                      Text(
-                                                          value="Hello,",
-                                                          size=30,
-                                                          color='#5a5c69',
-                                                          weight=FontWeight.W_300
+                                                      Row(
+                                                          controls=[
+                                                              Container(
+                                                                  margin=10,
+                                                                  padding=10,
+                                                                  border_radius=20,
+                                                                  content=Column(
+                                                                      horizontal_alignment=alignment.center,
+                                                                      controls=[
+                                                                          Container(
+                                                                              padding=10,
+                                                                              border_radius=20,
 
-                                                      ),
-                                                      Text(
-                                                          value='world',
-                                                          size=30,
-                                                          color='#5a5c69',
-                                                          weight=FontWeight.W_700,
+                                                                              bgcolor='#C5007F',
+                                                                              content=Text(
+                                                                              value='Голосовой ассистент Алекс',
+                                                                              color='white',
+                                                                              size=40,
+                                                                              )
+                                                                          ),
+                                                                          Container(
+                                                                              padding=10,
+                                                                              border_radius=20,
+                                                                              bgcolor='#C5007F',
+                                                                              content=Column(
+                                                                                  controls=[
+                                                                                      Container(
+                                                                                          content=Text(
+                                                                                              value='Как же к нему обратиться?',
+                                                                                              color='white',
+                                                                                              size=40,
 
+                                                                                          ),
+                                                                                      ),
+                                                                                      Container(
+                                                                                          content=Text(
+                                                                                              value='- Aлекс!',
+                                                                                              color='white',
+                                                                                              size=30,
+                                                                                          ),
+                                                                                      ),
+                                                                                  ]
+                                                                              )
+                                                                          ),
+                                                                          Container(
+                                                                              padding=10,
+                                                                              border_radius=20,
+                                                                              bgcolor='#C5007F',
+                                                                              content=Column(
+                                                                                  controls=[
+                                                                                      Text(
+                                                                                          text_align='center',
+                                                                                          value='ChatGPT???',
+                                                                                          color='white',
+                                                                                          size=40,
+
+                                                                                      ),
+                                                                                      Text(
+                                                                                          value='Да, в нём имеется ChatGPT 3.5 TURBO',
+                                                                                          color='white',
+                                                                                          size=35,
+                                                                                      ),
+                                                                                      Text(
+                                                                                          value='Что бы им воспользоваться, просто произнеси: "Скажи...",\n и она ответит на все интересующие тебя вопросы!',
+                                                                                          color='white',
+                                                                                          size=30,
+                                                                                      ),
+
+                                                                                  ]
+                                                                              )
+                                                                          ),
+                                                                          Container(
+                                                                              padding=10,
+                                                                              border_radius=20,
+                                                                              bgcolor='#9700cf',
+                                                                              content=Text(
+                                                                                          value='Развитие Алекса не стоит на месте, прими участие и ты!',
+                                                                                          color='white',
+                                                                                          size=35,
+                                                                                      )
+                                                                          )
+                                                                      ]
+                                                                  )
+                                                              ),
+                                                          ]
                                                       )
                                                   ]
                                               ),
@@ -348,9 +367,9 @@ class DashBoard(Container):
                 )
             ]
         )
-    def logout(self,e):
-        # self.page.go('/login')
-        os.remove('../token.pickle')
+    # def logout(self,e):
+    #     # self.page.go('/login')
+    #     os.remove('../token.pickle')
 
 
 

@@ -154,13 +154,22 @@ class CreateIndividualTask(Container):
             values = res.text
             print(values)
             json_value = json.loads(values[values.index('{'):values.rindex('}') + 1])
-            print(json_value)
-            message = json_value['message']
-            self.page.snack_bar = SnackBar(
-                Text(
-                    message
-                )
+            try:
+                message = json_value['message']
+                self.page.snack_bar = SnackBar(
+                    Text(
+                        message
+                    )
 
-            )
-            self.page.snack_bar.open = True
-            self.page.update()
+                )
+                self.page.snack_bar.open = True
+                self.page.update()
+            except:
+                self.page.snack_bar = SnackBar(
+                    Text(
+                        'Создано успешно!'
+                    )
+
+                )
+                self.page.snack_bar.open = True
+                self.page.update()

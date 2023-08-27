@@ -1,5 +1,12 @@
 from flet import *
+
+# import tts
 from utils.color import *
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+import smtplib
+
 class FogotPassword(Container):
     def __init__(self, page:Page):
         super().__init__()
@@ -13,7 +20,8 @@ class FogotPassword(Container):
                 bgcolor='#a6006c',
                 content_padding=padding.only(top=0, bottom=0, left=20, right=20),
                 hint_style=TextStyle(
-                    size=14, color='#c9c9c9',
+                    size=14,
+                    color='#c9c9c9',
 
                 ),
                 hint_text='Введите email привязанный к аккаунту',
@@ -98,4 +106,32 @@ class FogotPassword(Container):
 
         )
     def reset_password(self, e):
-        pass
+        emailSchoolboy = self.email_box.content.value
+        text = 'Чтобы восстановить пароль от аккаунта, обратитесь к сис админу :)'
+        emailAlex = 'alexvoiceassistent@yandex.ru'
+        passwordAlex = 'ejivdpmxsbacfvxo'
+        msg = MIMEMultipart()
+        msg['From'] = emailAlex
+        msg['To'] = emailSchoolboy
+        msg['Subject'] = 'Восстановление пароля'
+        msg.attach(
+            MIMEText(text, 'plain')
+        )
+
+        server = smtplib.SMTP_SSL('smtp.yandex.ru', 465)
+        server.ehlo(emailAlex)
+        server.login('alexvoiceassistent@yandex.ru', passwordAlex)
+        server.auth_plain()
+        server.send_message(msg)
+        server.quit()
+        # tts.va_speak('Сообщение отправленно')
+        self.page.snack_bar = SnackBar(
+            Text(
+                'Сообщение отправленно'
+            )
+        )
+        self.page.snack_bar.open = True
+        self.page.update()
+
+
+
